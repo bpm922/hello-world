@@ -52,6 +52,20 @@ osint-tool/
 - Ubuntu (or any Linux distribution)
 - pip (Python package manager)
 
+### System Dependencies
+
+Some plugins require system tools to be installed:
+
+```bash
+# Install WHOIS and DNS utilities
+sudo apt-get update
+sudo apt-get install -y whois dnsutils
+
+# These provide:
+# - whois: Domain/IP WHOIS lookups
+# - dig/nslookup: DNS record queries
+```
+
 ### Setup
 
 1. **Clone the repository**
@@ -60,18 +74,29 @@ git clone <repository-url>
 cd osint-tool
 ```
 
-2. **Create a virtual environment (recommended)**
+2. **Install system dependencies**
+```bash
+sudo apt-get update
+sudo apt-get install -y whois dnsutils
+```
+
+3. **Create a virtual environment (recommended)**
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # On Ubuntu/Linux
 ```
 
-3. **Install dependencies**
+4. **Install Python dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Verify installation**
+5. **Verify installation**
+```bash
+python verify_installation.py
+```
+
+6. **Run the application**
 ```bash
 python main.py
 ```
@@ -115,18 +140,121 @@ All exports are timestamped and saved to the `results/` directory.
 
 ## Integrated Tools
 
-### Sherlock Plugin
+The framework currently includes **7 OSINT plugins** covering various search types:
+
+### 1. Sherlock Plugin
 
 **Description**: Username search across 300+ social networks
 
-**Search Types**: Username
+**Search Types**: USERNAME
 
-**Usage**: The Sherlock plugin automatically searches for a given username across hundreds of social media platforms and websites.
+**Usage**: Searches for usernames across hundreds of social media platforms and websites.
 
-**Example Results**:
-- List of found profiles with URLs
-- Total number of matches
-- Sites checked
+**Features**:
+- 300+ site coverage
+- Profile URLs
+- Match counting
+- Parallel execution
+
+### 2. WHOIS Plugin
+
+**Description**: Domain registration and ownership information lookup
+
+**Search Types**: DOMAIN, IP
+
+**Usage**: Retrieves WHOIS records for domains and IP addresses.
+
+**Features**:
+- Registrar information
+- Creation and expiration dates
+- Name servers
+- Domain status
+- Contact information
+
+**Requirements**: `whois` command-line tool (`apt install whois`)
+
+### 3. DNS Lookup Plugin
+
+**Description**: DNS record enumeration
+
+**Search Types**: DOMAIN
+
+**Usage**: Queries multiple DNS record types for a domain.
+
+**Features**:
+- A (IPv4) records
+- AAAA (IPv6) records
+- MX (Mail) records
+- NS (Name Server) records
+- TXT records
+- CNAME records
+
+**Requirements**: `dig` or `nslookup` (`apt install dnsutils`)
+
+### 4. Have I Been Pwned Plugin
+
+**Description**: Check if email addresses have been compromised in data breaches
+
+**Search Types**: EMAIL
+
+**Usage**: Queries the Have I Been Pwned API to check if an email has appeared in known data breaches.
+
+**Features**:
+- Breach detection
+- Breach details (date, affected data types)
+- Number of breaches
+- Data class information
+- Rate limited (1 request per 1.5 seconds)
+
+**Note**: Public API - no key required for basic checks
+
+### 5. Email Validator Plugin
+
+**Description**: Email validation and verification
+
+**Search Types**: EMAIL
+
+**Usage**: Validates email format and checks domain/MX records.
+
+**Features**:
+- Format validation (RFC compliant)
+- Domain existence check
+- MX record verification
+- Validation scoring
+- Local part and domain extraction
+
+### 6. IP Geolocation Plugin
+
+**Description**: IP address geolocation and ISP information
+
+**Search Types**: IP
+
+**Usage**: Retrieves geographic location and network information for IP addresses.
+
+**Features**:
+- Country, region, city identification
+- Latitude/longitude coordinates
+- ISP and organization info
+- AS number
+- Timezone
+- ZIP code
+
+**API**: Uses free ip-api.com service (45 requests/minute limit)
+
+### 7. Phone Number Lookup Plugin
+
+**Description**: Phone number validation and country code identification
+
+**Search Types**: PHONE
+
+**Usage**: Analyzes phone numbers and identifies country codes.
+
+**Features**:
+- Format validation
+- Country code extraction
+- Country identification (150+ countries)
+- National number parsing
+- International format detection
 
 ## Creating New Plugins
 

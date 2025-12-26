@@ -8,6 +8,18 @@ echo "OSINT Framework Setup"
 echo "========================================="
 echo
 
+# Check if running with sudo for system packages
+if [ "$EUID" -ne 0 ]; then
+    echo "Note: Some system packages require sudo privileges."
+    echo "You may be prompted for your password."
+    echo
+fi
+
+# Install system dependencies
+echo "Installing system dependencies..."
+sudo apt-get update -qq
+sudo apt-get install -y -qq whois dnsutils
+
 # Check Python version
 echo "Checking Python version..."
 python3 --version

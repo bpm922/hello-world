@@ -1,0 +1,71 @@
+{
+  "plugins": {
+    "shodan": {
+      "enabled": true,
+      "requires_api_key": true,
+      "api_key": "",
+      "description": "IP/device intelligence using Shodan API",
+      "rate_limit_info": "Free tier: 1 request/second"
+    },
+    "hibp": {
+      "enabled": true,
+      "requires_api_key": false,
+      "api_key": "",
+      "description": "Breach data search using Have I Been Pwned API",
+      "rate_limit_info": "Free tier: rate limited without API key"
+    },
+    "whois": {
+      "enabled": true,
+      "requires_api_key": false,
+      "api_key": null,
+      "description": "Domain ownership and DNS records lookup",
+      "dependencies": ["python-whois", "dnspython"]
+    },
+    "photon": {
+      "enabled": true,
+      "requires_api_key": false,
+      "api_key": null,
+      "description": "Website reconnaissance and data extraction",
+      "default_max_depth": 2,
+      "default_max_pages": 100
+    },
+    "theharvester": {
+      "enabled": true,
+      "requires_api_key": false,
+      "api_key": null,
+      "description": "Email and subdomain discovery",
+      "default_sources": ["bing", "google", "duckduckgo"]
+    },
+    "spider": {
+      "enabled": true,
+      "requires_api_key": false,
+      "api_key": null,
+      "description": "Web crawling and link discovery",
+      "default_max_depth": 3,
+      "default_max_pages": 200
+    },
+    "sherlock": {
+      "enabled": true,
+      "requires_api_key": false,
+      "api_key": null,
+      "description": "Username search across social media platforms",
+      "dependencies": ["sherlock"]
+    }
+  },
+  "exporters": {
+    "default_format": "json",
+    "output_directory": "./results",
+    "available_formats": ["json", "csv", "txt"]
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "./kirwada.log"
+  },
+  "settings": {
+    "default_timeout": 10,
+    "max_retries": 3,
+    "respect_robots_txt": true,
+    "user_agent": "Kirwada-OSINT-Tool/1.0"
+  }
+}

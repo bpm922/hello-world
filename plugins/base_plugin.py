@@ -34,8 +34,8 @@ class BasePlugin(ABC):
             config: Plugin configuration dictionary
         """
         self.config = config or {}
-        self.logger = logging.getLogger(f"Kirwada.{self.name}")
         self.name = self.__class__.__name__.replace('Plugin', '').lower()
+        self.logger = logging.getLogger(f"Kirwada.{self.name}")
         
     @property
     @abstractmethod

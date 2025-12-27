@@ -347,7 +347,10 @@ class Kirwada:
         print(f"Successful: {successful}")
         print(f"Failed: {failed}")
         print(f"Total time: {total_time:.2f}s")
-        print(f"Average time: {total_time/len(results):.2f}s")
+        if len(results) > 0:
+            print(f"Average time: {total_time/len(results):.2f}s")
+        else:
+            print("Average time: N/A (no results)")
         
         print("\nResults by source:")
         for result in results:
